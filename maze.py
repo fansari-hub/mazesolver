@@ -1,6 +1,6 @@
 from cell import *
-
-class maze:
+import time
+class Maze:
     def __init__(
             self,
             x1,
@@ -33,11 +33,20 @@ class maze:
             self._cells.append(column_list)
 
         for i in range (0, len(self._cells)):
-            for j in range (0, len(i)):
+            for j in range (0, len(self._cells[i])):
                 self._draw_cell(i, j)
 
     def _draw_cell(self, i, j):
-        pass
+        x1_pos = self._x1 + (self._cell_size_x * i)
+        y1_pos =  self._y1 + (self._cell_size_y * j)
+        x2_pos = self._x1 + (self._cell_size_x * i + self._cell_size_x )
+        y2_pos =  self._y1 + (self._cell_size_y * j + self._cell_size_y)
+        self._cells[i][j].draw(x1_pos, y1_pos, x2_pos, y2_pos)
+        self._animate()
+
 
     def _animate(self):
-        pass
+        if self._win is None:
+            return
+        self._win.redraw()
+        time.sleep(0.005)
