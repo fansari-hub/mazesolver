@@ -22,6 +22,6 @@ class Window:
     def close(self):
         self.__is_window_running = False
 
-    def draw_line(self, line, fill_color="black"):
-        line.draw(self.__canvas, fill_color)
+    def draw_line(self, line, fill_color="black", line_width=2):
+        line.draw(self.__canvas, fill_color,line_width)
         #print("window is drawing line")
