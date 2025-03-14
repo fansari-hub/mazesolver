@@ -1,8 +1,8 @@
 from window import *
 from maze import *
 
-NUM_ROWS = 12
-NUM_COLS = 12
+NUM_ROWS = 24
+NUM_COLS = 24
 MARGIN = 50
 SCREEN_X = 1024
 SCREEN_Y = 1024
