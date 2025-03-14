@@ -2,8 +2,8 @@ from window import *
 from maze import *
 import time
 
-NUM_ROWS = 40
-NUM_COLS = 40
+NUM_ROWS = 30
+NUM_COLS = 30
 MARGIN = 50
 SCREEN_X = 1024
 SCREEN_Y = 1024

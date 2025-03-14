@@ -100,20 +100,27 @@ class Maze:
                 return
             else:
                 random_direction = random.randint(0, len(to_visit)-1)
+                next_cell = self._cells[to_visit[random_direction][0]][to_visit[random_direction][1]]
                 
                 if to_visit[random_direction][0] == i and to_visit[random_direction][1] < j:
                     current_cell.has_left_wall = False
+                    next_cell.has_right_wall = False #if we don't do this, and draw the next cell in the next recursion, it will overwite the removed wall visually until recursion returns
                 elif to_visit[random_direction][0] < i and to_visit[random_direction][1] == j:
                     current_cell.has_top_wall = False
+                    next_cell.has_bottom_wall = False
                 elif to_visit[random_direction][0] == i and to_visit[random_direction][1] > j:
                     current_cell.has_right_wall = False
+                    next_cell.has_left_wall = False
                 elif to_visit[random_direction][0] > i and to_visit[random_direction][1] == j:
                     current_cell.has_bottom_wall = False
+                    next_cell.has_top_wall = False
                 
                 self._animate(0.005)
                 self._draw_cell(i, j)
-                current_cell.draw_cursor(self._cells[to_visit[random_direction][0]][to_visit[random_direction][1]])
+
+                current_cell.draw_cursor(next_cell, "red")
                 self._break_walls_r(to_visit[random_direction][0], to_visit[random_direction][1])
+                current_cell.draw_cursor(next_cell, "white")
             
     def _reset_cells_visited(self):
         for i in range (0, self._num_rows):
