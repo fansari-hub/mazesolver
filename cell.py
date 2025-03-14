@@ -52,6 +52,10 @@ class Cell:
         else:
             self._win.draw_line(line, "lightgray", 10)
 
+    def draw_cursor(self, to_cell):
+        line = Line(self.get_center(), to_cell.get_center())
+        self._win.draw_line(line, "red", 1)            
+
     def get_center(self):
         center_x = (self._x1 + self._x2) / 2
         center_y = (self._y1 + self._y2) / 2

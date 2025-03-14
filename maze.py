@@ -11,6 +11,7 @@ class Maze:
             cell_size_x,
             cell_size_y,
             win=None,
+            speed_factor = 1,
             seed=None
         ):
         self._x1 = x1
@@ -21,6 +22,11 @@ class Maze:
         self._cell_size_y = cell_size_y
         self._win = win
 
+        if speed_factor > 0:
+            self._speed_factor = speed_factor
+        else:
+            self._speed_factor = 1
+
         if seed is not None:
             random.seed(seed)
         
@@ -28,7 +34,6 @@ class Maze:
 
 
         self._create_cells()
-
 
     def _create_cells(self):
         for r in range (0, self._num_rows):
@@ -54,7 +59,7 @@ class Maze:
         if self._win is None:
             return
         self._win.redraw()
-        time.sleep(speed)
+        time.sleep(speed * ( 1 /self._speed_factor))
 
     def _break_entrance_and_exit(self):
         if len (self._cells) < 1:
@@ -65,15 +70,13 @@ class Maze:
         self._draw_cell(self._num_rows-1, self._num_cols-1)
 
     def _break_walls_r(self, i, j):
-        #print(self._cells)
         current_cell = self._cells[i][j]
         current_cell.visited = True
         
         while True:
             to_visit = []
             dead_end = True
-            #print("inside loop")
-            #print(f"current cell: {i}, {j}")
+            self._animate(0.005)
             if current_cell.has_left_wall == True and j>0:
                 if self._cells[i][j-1].visited == False:
                     dead_end = False
@@ -90,16 +93,13 @@ class Maze:
                 if self._cells[i+1][j].visited == False:
                     dead_end = False
                     to_visit.append((i+1, j))
-            #print(f"dead end? {dead_end}")
-            #print(f"to visit: {to_visit}")
 
             if dead_end:
-                self._animate(0.001)
+                #self._animate(0.005)
                 self._draw_cell(i, j)
                 return
             else:
                 random_direction = random.randint(0, len(to_visit)-1)
-                #print(f"random index: {random_direction}")
                 
                 if to_visit[random_direction][0] == i and to_visit[random_direction][1] < j:
                     current_cell.has_left_wall = False
@@ -110,6 +110,9 @@ class Maze:
                 elif to_visit[random_direction][0] > i and to_visit[random_direction][1] == j:
                     current_cell.has_bottom_wall = False
                 
+                self._animate(0.005)
+                self._draw_cell(i, j)
+                current_cell.draw_cursor(self._cells[to_visit[random_direction][0]][to_visit[random_direction][1]])
                 self._break_walls_r(to_visit[random_direction][0], to_visit[random_direction][1])
             
     def _reset_cells_visited(self):
