@@ -48,9 +48,9 @@ class Cell:
     def draw_move(self, to_cell, undo=False):
         line = Line(self.get_center(), to_cell.get_center())
         if undo == False:
-            self._win.draw_line(line, "green", 10)
+            self._win.draw_line(line, "green", 5)
         else:
-            self._win.draw_line(line, "lightgray", 10)
+            self._win.draw_line(line, "lightgray", 5)
 
     def draw_cursor(self, to_cell, color="red"):
         line = Line(self.get_center(), to_cell.get_center())
